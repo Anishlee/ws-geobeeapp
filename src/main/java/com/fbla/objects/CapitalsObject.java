@@ -2,6 +2,14 @@ package com.fbla.objects;
 
 public class CapitalsObject {
 	
+	
+	@Override
+	public String toString() {
+		return "CapitalsObject [questionId=" + questionId + ", question=" + question + ", choice1=" + choice1
+				+ ", choice2=" + choice2 + ", choice3=" + choice3 + ", choice4=" + choice4 + ", answer=" + answer
+				+ ", questionType=" + questionType + ", questionSubType=" + questionSubType + ", answerOption="
+				+ answerOption + ", questionId2=" + questionId2 + ", userOption=" + userOption + "]";
+	}
 	public CapitalsObject() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -17,7 +25,14 @@ public class CapitalsObject {
 	String questionSubType;
 	String answerOption;
 	String questionId2;
+	String userOption;
 	
+	public String getUserOption() {
+		return userOption;
+	}
+	public void setUserOption(String userOption) {
+		this.userOption = userOption;
+	}
 	public String getQuestionId2() {
 		return questionId2;
 	}

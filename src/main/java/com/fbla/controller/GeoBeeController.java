@@ -1,14 +1,19 @@
 package com.fbla.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fbla.dbconnection.MongoDBConnection;
 import com.fbla.objects.CapitalsObject;
+import com.fbla.objects.User;
+import com.fbla.objects.UserObject;
 import com.geobee.helper.GeobeeHelper;
 
 
@@ -23,6 +28,7 @@ public class GeoBeeController {
 	static ArrayList< CapitalsObject> geoBeeQuestionsByStateArrayList = null; 
 	static ArrayList< CapitalsObject> nickNameQuestionsArrayList = null; 
 	static ArrayList< String> randomFactOfTheDayArrayList = null; 
+	static HashMap<String, UserObject> userSavedSession=new HashMap<String, UserObject>();
     
 	 @GetMapping(value = "/getCapitalQuestionsTest")
 	    public String getCapitalQuestionsTest(@RequestParam(name ="size") int size){
@@ -127,6 +133,55 @@ public class GeoBeeController {
         
     }
     
+    
+    @PostMapping(value="/saveUserSession")
+
+    public void saveUserSession(@RequestBody UserObject userObject) {
+    	System.out.println("In save usersession1");
+    	User user= userObject.getUser();
+    
+    	System.out.println("user"+user.getEmail());
+    	System.out.println("user"+userObject);
+    	
+  
+    	
+    	
+    	if(userObject!=null) {
+    		
+    		userSavedSession.put(user.getEmail(), userObject);
+    	}
+    	
+       
+    	
+    }
+    
+    @GetMapping(value = "/getUserSavedSession")
+
+    public UserObject  getUserSavedSession(@RequestParam(name ="email") String email) {
+    	System.out.println("In save usersession2");
+    	UserObject userObject= userSavedSession.get(email);
+    
+    	
+    	
+    return userObject;
+       
+    	
+    }
+    
+    @PostMapping(value = "/resetUserSavedSession")
+
+    public void  resetUserSavedSession(@RequestBody User user) {
+    	
+    	
+    	
+    	userSavedSession.remove(user.getEmail());
+    	System.out.println("existing session"+userSavedSession.get(user.getEmail()));
+    	
+    	
+    
+       
+    	
+    }
     
 
     @GetMapping(value = "/getQuestionsByState")
